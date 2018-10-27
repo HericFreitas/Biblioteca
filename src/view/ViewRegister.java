@@ -6,38 +6,34 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.List;
 import model.DAO.LivroDAO;
 import model.bean.Livro;
-import tables.LivroTableModel;
+import table.LivroTableModel;
+
 
 /**
  *
  * @author Heric
  */
 public class ViewRegister extends javax.swing.JFrame {
-
-    private ArrayList<Livro> lista;
-    private LivroTableModel modelo;
-    private Livro livro;
-   
-    
+ 
+    private LivroTableModel model;
+    private List<Livro> lista;
     /**
      * Creates new form ViewRegister
      */
     public ViewRegister() {
         initComponents();
-    //    Initialize();
+        atualizarTela();        
     }
 
-    
-    private void Initialize(){
+    private void atualizarTela(){
         lista = new ArrayList<>();
         LivroDAO dao = new LivroDAO();
-        lista = (ArrayList<Livro>) dao.read();
+        lista = dao.read();
+        model = new LivroTableModel(lista);
         
-        livro = new Livro();
-        modelo = new LivroTableModel(lista);
-        jTable1.getModel();
     }
     
     
@@ -219,17 +215,26 @@ public class ViewRegister extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private Livro getInformation(){
+        String Autor = tvA.getText(); 
+        String Titulo = txTi.getText();
+        String Edicao = txedic.getText();
+        String Editora = txeditora.getText();
+        String Tombamento = txtomb.getText();
+        
+        Livro item = new Livro(Titulo, Autor, Editora, Edicao, Tombamento);
+        
+        return item;
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Livro p = new Livro();
+        Livro l = getInformation();
         LivroDAO dao = new LivroDAO();
         
-        p.setAutor(tvA.getText());
-        p.setTitulo(txTi.getText());
-        p.setEdicao(txedic.getText());
-        p.setEditora(txeditora.getText());
-        p.setTombamento(txtomb.getText());
-        dao.insert(p);
-      //  Initialize();
+        
+        dao.insert(l);
+        model.adicionar(l);
+        atualizarTela();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

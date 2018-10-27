@@ -12,6 +12,20 @@ package model.bean;
 public class Livro {
     private String Titulo, Autor, Editora, Edicao, Tombamento;
 
+    public Livro(String Titulo, String Autor, String Editora, String Edicao, String Tombamento) {
+        this.Titulo = Titulo;
+        this.Autor = Autor;
+        this.Editora = Editora;
+        this.Edicao = Edicao;
+        this.Tombamento = Tombamento;
+    }
+
+    public Livro() {
+    
+    }
+    
+    
+
     public String getTitulo() {
         return Titulo;
     }
