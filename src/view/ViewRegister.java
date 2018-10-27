@@ -7,6 +7,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.DAO.LivroDAO;
 import model.bean.Livro;
 import table.LivroTableModel;
@@ -33,6 +34,7 @@ public class ViewRegister extends javax.swing.JFrame {
         LivroDAO dao = new LivroDAO();
         lista = dao.read();
         model = new LivroTableModel(lista);
+        jTable1.setModel(model);
         
     }
     
@@ -63,6 +65,8 @@ public class ViewRegister extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1100, 600));
+        setMinimumSize(new java.awt.Dimension(1100, 600));
         setUndecorated(true);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -216,6 +220,10 @@ public class ViewRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private Livro getInformation(){
+        
+        if(tvA.getText().equals("") || txTi.getText().equals("") || txedic.getText().equals("") || txeditora.getText().equals("") || txtomb.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "FALTOU ALGO");
+        }else{
         String Autor = tvA.getText(); 
         String Titulo = txTi.getText();
         String Edicao = txedic.getText();
@@ -225,6 +233,8 @@ public class ViewRegister extends javax.swing.JFrame {
         Livro item = new Livro(Titulo, Autor, Editora, Edicao, Tombamento);
         
         return item;
+        }
+        return null;
     }
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

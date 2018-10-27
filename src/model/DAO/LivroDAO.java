@@ -42,7 +42,7 @@ public class LivroDAO {
         
             JOptionPane.showMessageDialog(null, "INSERIDO COM SUCESSO!");
         } catch (SQLException ex) {
-            Logger.getLogger(LivroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "PROBLEMAS");
         }finally{
             ConnectionLibrary.closeConnection(conn, stmt);
         }
@@ -56,6 +56,35 @@ public class LivroDAO {
         
         try {
             stmt = conn.prepareStatement("SELECT * FROM livro");
+            rs = stmt.executeQuery();
+            while(rs.next()){
+            
+                Livro l = new Livro();
+                l.setTitulo(rs.getString("Titulo"));
+                l.setAutor(rs.getString("Autor"));
+                l.setEditora(rs.getString("Editora"));
+                l.setEdicao(rs.getString("Edição"));
+                l.setTombamento(rs.getString("Tombamento"));
+                livros.add(l);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LivroDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            ConnectionLibrary.closeConnection(conn, stmt, rs);
+        }
+        return livros;
+    }
+    
+    public List<Livro> Localizar (String selecao){
+        Connection conn = ConnectionLibrary.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Livro> livros = new ArrayList<>();
+        
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM livro WHERE");
             rs = stmt.executeQuery();
             while(rs.next()){
             

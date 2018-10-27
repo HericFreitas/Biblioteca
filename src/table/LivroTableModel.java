@@ -41,14 +41,12 @@ public class LivroTableModel extends AbstractTableModel{
             case 0:
                 return dados.get(linha).getTitulo();
             case 1:
-                return dados.get(linha).getTitulo();
+                return dados.get(linha).getAutor();
             case 2:
-                 return dados.get(linha).getAutor();
+                 return dados.get(linha).getEditora();
             case 3:
-                return dados.get(linha).getEditora();
-            case 4:
                 return dados.get(linha).getEdicao();
-            case 5:
+            case 4:
                 return dados.get(linha).getTombamento();        
         }
         
