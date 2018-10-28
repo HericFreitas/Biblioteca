@@ -48,6 +48,48 @@ public class LivroDAO {
         }
     }
     
+    public void delete (Livro l){
+        Connection conn = ConnectionLibrary.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = conn.prepareStatement("DELETE FROM livro WHERE Tombamento = ?");
+            stmt.setString(1, l.getTombamento().toUpperCase());
+            
+            stmt.executeUpdate();
+        
+            JOptionPane.showMessageDialog(null, "DELETADO COM SUCESSO!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "PROBLEMAS");
+        }finally{
+            ConnectionLibrary.closeConnection(conn, stmt);
+        }
+    }
+    
+    
+    public void atualizar (Livro l){
+        Connection conn = ConnectionLibrary.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = conn.prepareStatement("UPDATE livro SET Titulo = ?, Autor = ?, Editora = ?, Edição = ?, Tombamento = ? WHERE Tombamento = ?");
+            stmt.setString(1, l.getTitulo().toUpperCase());
+            stmt.setString(2, l.getAutor().toUpperCase());
+            stmt.setString(3, l.getEditora().toUpperCase());
+            stmt.setString(4, l.getEdicao().toUpperCase());
+            stmt.setString(5, l.getTombamento().toUpperCase());
+            stmt.setString(6, l.getTombamento().toUpperCase());
+            
+            stmt.executeUpdate();
+        
+            JOptionPane.showMessageDialog(null, "ATUALIZADO COM SUCESSO!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "PROBLEMAS");
+        }finally{
+            ConnectionLibrary.closeConnection(conn, stmt);
+        }
+    }
+    
     public List<Livro> read (){
         Connection conn = ConnectionLibrary.getConnection();
         PreparedStatement stmt = null;
