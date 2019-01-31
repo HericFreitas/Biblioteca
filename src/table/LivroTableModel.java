@@ -73,5 +73,9 @@ public class LivroTableModel extends AbstractTableModel{
         dados.remove(iLinha);
         fireTableRowsDeleted(iLinha, iLinha);
     }
+
+    public void buscar (String b){
+        
+    }
     
 }

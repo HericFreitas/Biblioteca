@@ -7,6 +7,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.DAO.LivroDAO;
 import model.bean.Livro;
 import table.LivroTableModel;
@@ -37,6 +38,16 @@ public class ViewTable extends javax.swing.JFrame {
         
     }
     
+    private void atualizarTelaPesquisa(){
+        lista = new ArrayList<>();
+        LivroDAO dao = new LivroDAO();
+        String tipo = (String) jComboBox1.getSelectedItem();
+        lista = dao.Busca(tipo ,jTextField1.getText());
+        model = new LivroTableModel(lista);
+        jTable1.setModel(model);
+        System.out.println(tipo);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +70,6 @@ public class ViewTable extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1100, 600));
         setMinimumSize(new java.awt.Dimension(1100, 600));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1100, 600));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo_pma.png"))); // NOI18N
 
@@ -88,7 +98,12 @@ public class ViewTable extends javax.swing.JFrame {
         jLabel2.setText("Localizar:");
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Título", "Autor", "Editora", "Edição", "Tombamento" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<SELECIONE UMA OPÇÃO>", "Titulo", "Autor", "Editora", "Edição", "Tombamento" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
@@ -116,7 +131,7 @@ public class ViewTable extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 265, Short.MAX_VALUE)))
+                        .addGap(0, 145, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
@@ -150,9 +165,34 @@ public class ViewTable extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private Livro getInformation(){
         
+        if(jTextField1.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "FALTOU ALGO");
+        }else{
+        String busca = jTextField1.getText(); 
+                
+        Livro item = new Livro(busca);
+        
+        return item;
+        }
+        return null;
+    }
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        LivroDAO dao = new LivroDAO();
+        Livro l = getInformation();
+        
+        if(jTextField1.getText().equals("") && jComboBox1.getSelectedItem().equals("<SELECIONE UMA OPÇÃO>")){
+            JOptionPane.showMessageDialog(null, "FALTOU ALGO");
+        }else{
+            atualizarTelaPesquisa();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,7 +232,7 @@ public class ViewTable extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<Object> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

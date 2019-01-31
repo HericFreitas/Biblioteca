@@ -117,16 +117,18 @@ public class LivroDAO {
             ConnectionLibrary.closeConnection(conn, stmt, rs);
         }
         return livros;
-    }
+    }  
     
-    public List<Livro> Localizar (String selecao){
+    public List<Livro> Busca (String tipo, String busca){
         Connection conn = ConnectionLibrary.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Livro> livros = new ArrayList<>();
         
         try {
-            stmt = conn.prepareStatement("SELECT * FROM livro WHERE");
+            if(tipo.equals("Titulo")){
+            stmt = conn.prepareStatement("SELECT * FROM livro WHERE Titulo LIKE ?");
+            stmt.setString(1, busca.toUpperCase());
             rs = stmt.executeQuery();
             while(rs.next()){
             
@@ -137,7 +139,63 @@ public class LivroDAO {
                 l.setEdicao(rs.getString("Edição"));
                 l.setTombamento(rs.getString("Tombamento"));
                 livros.add(l);
-                
+            }
+            }else if(tipo.equals("Autor")){
+            stmt = conn.prepareStatement("SELECT * FROM livro WHERE Autor LIKE ?");
+            stmt.setString(1, busca.toUpperCase());
+            rs = stmt.executeQuery();
+            while(rs.next()){
+            
+                Livro l = new Livro();
+                l.setTitulo(rs.getString("Titulo"));
+                l.setAutor(rs.getString("Autor"));
+                l.setEditora(rs.getString("Editora"));
+                l.setEdicao(rs.getString("Edição"));
+                l.setTombamento(rs.getString("Tombamento"));
+                livros.add(l);
+            }    
+            }else if(tipo.equals("Editora")){
+                stmt = conn.prepareStatement("SELECT * FROM livro WHERE Editora LIKE ?");
+            stmt.setString(1, busca.toUpperCase());
+            rs = stmt.executeQuery();
+            while(rs.next()){
+            
+                Livro l = new Livro();
+                l.setTitulo(rs.getString("Titulo"));
+                l.setAutor(rs.getString("Autor"));
+                l.setEditora(rs.getString("Editora"));
+                l.setEdicao(rs.getString("Edição"));
+                l.setTombamento(rs.getString("Tombamento"));
+                livros.add(l);
+            }
+            }else if(tipo.equals("Edição")){
+                stmt = conn.prepareStatement("SELECT * FROM livro WHERE Edição LIKE ?");
+            stmt.setString(1, busca.toUpperCase());
+            rs = stmt.executeQuery();
+            while(rs.next()){
+            
+                Livro l = new Livro();
+                l.setTitulo(rs.getString("Titulo"));
+                l.setAutor(rs.getString("Autor"));
+                l.setEditora(rs.getString("Editora"));
+                l.setEdicao(rs.getString("Edição"));
+                l.setTombamento(rs.getString("Tombamento"));
+                livros.add(l);
+            }
+            }else if(tipo.equals("Tombamento")){
+                stmt = conn.prepareStatement("SELECT * FROM livro WHERE Tombamento LIKE ?");
+            stmt.setString(1, busca.toUpperCase());
+            rs = stmt.executeQuery();
+            while(rs.next()){
+            
+                Livro l = new Livro();
+                l.setTitulo(rs.getString("Titulo"));
+                l.setAutor(rs.getString("Autor"));
+                l.setEditora(rs.getString("Editora"));
+                l.setEdicao(rs.getString("Edição"));
+                l.setTombamento(rs.getString("Tombamento"));
+                livros.add(l);
+            }
             }
             
         } catch (SQLException ex) {
@@ -147,7 +205,5 @@ public class LivroDAO {
         }
         return livros;
     }
-    
-    
     
 }

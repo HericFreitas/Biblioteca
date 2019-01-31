@@ -10,7 +10,7 @@ package model.bean;
  * @author Heric
  */
 public class Livro {
-    private String Titulo, Autor, Editora, Edicao, Tombamento;
+    private String Titulo, Autor, Editora, Edicao, Tombamento, Busca;
 
     public Livro(String Titulo, String Autor, String Editora, String Edicao, String Tombamento) {
         this.Titulo = Titulo;
@@ -20,8 +20,20 @@ public class Livro {
         this.Tombamento = Tombamento;
     }
 
+    public Livro(String Busca){
+        this.Busca = Busca;
+    }
+    
     public Livro() {
     
+    }
+
+    public String getBusca() {
+        return Busca;
+    }
+
+    public void setBusca(String Busca) {
+        this.Busca = Busca;
     }
     
     
